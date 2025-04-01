@@ -274,9 +274,8 @@ M.generate_test_results = function(output_file_path, tree, context_id)
         result_test_name = string.gsub(result_test_name, "%(.*%)", "")
       end
 
-      -- Use the full_name of the test, including namespace
-      local is_match = #result_test_name == #node_data.full_name
-        and string.find(result_test_name, node_data.full_name, 0, true)
+      -- Use the full_name of the test, excluding namespace to fix file scoped namespaces
+      local is_match = string.find(result_test_name, node_data.full_name, 0, true) ~= nil
 
       if is_match then
         -- For non-inlined parameterized tests, check if we already have an entry for the test.
